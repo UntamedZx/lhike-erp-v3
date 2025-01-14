@@ -16,13 +16,20 @@ const UserManagement = () => {
 	const [data, setData] = useState([]);
 	const [totalRecords, setTotalRecords] = useState(0);
 	const [loading, setLoading] = useState(false);
-	const [pageSize, setPageSize] = useState(5);
+	const [pageSize, setPageSize] = useState(10);
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [pageIndex, setPageIndex] = useState(0); // Track the page index for pagination
 	const [canNextPage, setCanNextPage] = useState(false);
 	const [canPreviousPage, setCanPreviousPage] = useState(false);
 	const router = useRouter();
 	const searchParams = useSearchParams();
+
+	useEffect(() => {
+		const token = localStorage.getItem("authToken");
+		if (!token) {
+			router.push("/");
+		}
+	}, [router]);
 
 	useEffect(() => {
 		const pageParam = searchParams.get("page");
@@ -50,11 +57,20 @@ const UserManagement = () => {
 	) => {
 		setLoading(true);
 		try {
+			const token = localStorage.getItem("authToken");
+			if (!token) {
+				router.push("/");
+				return;
+			}
+
 			const response = await axios.get("http://localhost:5000/users", {
 				params: {
 					page: pageIndex + 1,
 					pageSize,
 					search: globalFilter,
+				},
+				headers: {
+					Authorization: `Bearer ${token}`,
 				},
 			});
 			setData(response.data.data);
@@ -125,13 +141,12 @@ const UserManagement = () => {
 		setPageSize(newPageSize);
 		setTablePageSize(newPageSize);
 		setPageIndex(0);
-		router.push(`?page=1&pageSize=${newPageSize}`);
+		router.push(`?page=1&pageSize=${newPageSize}&search=${globalFilter}`);
 	};
 
 	const handleGlobalFilterChange = (e: any) => {
 		setGlobalFilter(e.target.value);
-		setPageIndex(0);
-		router.push(`?search=${e.target.value}`);
+		router.push(`?page=1&pageSize=${pageSize}&search=${e.target.value}`);
 	};
 
 	const totalPages = Math.ceil(totalRecords / pageSize); // Total number of pages
@@ -162,7 +177,9 @@ const UserManagement = () => {
 	const handlePageNumberClick = (pageNumber: number) => {
 		setPageIndex(pageNumber - 1);
 		fetchData(pageNumber - 1, pageSize, globalFilter);
-		router.push(`?page=${pageNumber}&pageSize=${pageSize}`);
+		router.push(
+			`?page=${pageNumber}&pageSize=${pageSize}&search=${globalFilter}`
+		);
 	};
 
 	const handlePreviousPage = () => {
@@ -170,8 +187,9 @@ const UserManagement = () => {
 			const prevPageIndex = pageIndex - 1;
 			setPageIndex(prevPageIndex);
 			fetchData(prevPageIndex, pageSize, globalFilter);
-
-			router.push(`?page=${prevPageIndex + 1}&pageSize=${pageSize}`);
+			router.push(
+				`?page=${prevPageIndex + 1}&pageSize=${pageSize}&search=${globalFilter}`
+			);
 		}
 	};
 
@@ -208,9 +226,6 @@ const UserManagement = () => {
 			<div className="grid grid-cols-12 gap-6">
 				<div className="col-span-12">
 					<div className="box">
-						<div className="box-header">
-							<h5 className="box-title">Responsive DataTable</h5>
-						</div>
 						<div className="box-body space-y-3">
 							<div className="overflow-hidden">
 								<div
@@ -219,10 +234,10 @@ const UserManagement = () => {
 									<div className="e-table">
 										<div className="flex mb-4">
 											<select
-												className="selectpage border me-1"
+												className="selectpage border me-1 text-sm"
 												value={pageSize}
 												onChange={handlePageSizeChange}>
-												{[5, 10, 25, 50].map((size) => (
+												{[10, 25, 50].map((size) => (
 													<option key={size} value={size}>
 														Show {size}
 													</option>
@@ -311,21 +326,32 @@ const UserManagement = () => {
 										</div>
 										<div className="block sm:flex mt-4">
 											<div>
-												Page{" "}
-												<strong>
-													{pageIndex + 1} of{" "}
-													{Math.ceil(totalRecords / pageSize)}
-												</strong>
+												{data.length === 0 ? (
+													<>
+														Showing <strong>0 to 0 of 0 entries</strong>
+													</>
+												) : (
+													<>
+														Showing{" "}
+														<strong>
+															{pageIndex * pageSize + 1} to{" "}
+															{Math.min(
+																totalRecords,
+																(pageIndex + 1) * pageSize
+															)}{" "}
+															of {totalRecords} entries
+														</strong>
+													</>
+												)}
 											</div>
+
 											<div className="sm:ms-auto float-right my-1 sm:my-0">
 												<button
 													className="btn-outline-light tablebutton me-2 mb-2 sm:mb-0"
-													onClick={handlePreviousPage}
-													disabled={!canPreviousPage}>
-													{" Previous "}
+													onClick={handleFirstPage}
+													disabled={pageIndex === 0}>
+													{" First "}
 												</button>
-
-												{/* Dynamic Page Numbers */}
 												{/* Dynamic Page Numbers */}
 												{generatePageNumbers().map((page) => (
 													<button
@@ -342,9 +368,9 @@ const UserManagement = () => {
 
 												<button
 													className="btn-outline-light tablebutton me-2 mb-2 sm:mb-0"
-													onClick={handleNextPage}
-													disabled={!canNextPage}>
-													{" Next "}
+													onClick={handleLastPage}
+													disabled={pageIndex === totalPages - 1}>
+													{" Last "}
 												</button>
 											</div>
 										</div>

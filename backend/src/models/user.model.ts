@@ -4,7 +4,7 @@ export interface IUserRole {
 	[moduleId: string]: string[];
 }
 
-interface IUser extends Document {
+export interface IUser extends Document {
 	empNo?: string | null;
 	intId?: string | null;
 	isActive: boolean;

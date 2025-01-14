@@ -1,4 +1,5 @@
 import React from "react";
+import { isAuthenticated } from "@/utils/auth";
 
 const DashboardIcon = <i className="bx bx-home side-menu__icon"></i>;
 const MainSWLIcon = <i className="bx bx-line-chart side-menu__icon"></i>;
@@ -9,19 +10,19 @@ const FinanceIcon = <i className="bx bx-credit-card side-menu__icon"></i>;
 const PSIcon = <i className="bx bxl-facebook side-menu__icon"></i>;
 const ROASIcon = <i className="bx bx-bar-chart-alt side-menu__icon"></i>;
 const ROASSIcon = <i className="bx bx-bar-chart-square side-menu__icon"></i>;
-const STIcon = <i className='bx bx-cart-alt side-menu__icon' ></i>;
-const PTIcon = <i className='bx bx-test-tube side-menu__icon' ></i>;
-const BMIcon = <i className='bx bx-spreadsheet side-menu__icon' ></i>;
-const PFIcon = <i className='bx bx-calculator side-menu__icon' ></i>;
-const SettIcon = <i className='bx bx-cog side-menu__icon' ></i>
-const TaskIcon = <i className='bx bx-task side-menu__icon'></i>;
-const ISIcon = <i className='bx bxs-bank side-menu__icon' ></i>;
-const ERIcon = <i className='bx bx-wallet-alt side-menu__icon' ></i>;
-const BKIcon = <i className='bx bx-book side-menu__icon' ></i>;
-const RIcon = <i className='bx bx-money side-menu__icon' ></i>;
-const UEIcon = <i className='bx bx-box side-menu__icon' ></i>;
-const UMIcon = <i className='bx bxs-user-account side-menu__icon' ></i>;
-const UIIcon = <i className='bx bxs-user-rectangle side-menu__icon' ></i>;
+const STIcon = <i className="bx bx-cart-alt side-menu__icon"></i>;
+const PTIcon = <i className="bx bx-test-tube side-menu__icon"></i>;
+const BMIcon = <i className="bx bx-spreadsheet side-menu__icon"></i>;
+const PFIcon = <i className="bx bx-calculator side-menu__icon"></i>;
+const SettIcon = <i className="bx bx-cog side-menu__icon"></i>;
+const TaskIcon = <i className="bx bx-task side-menu__icon"></i>;
+const ISIcon = <i className="bx bxs-bank side-menu__icon"></i>;
+const ERIcon = <i className="bx bx-wallet-alt side-menu__icon"></i>;
+const BKIcon = <i className="bx bx-book side-menu__icon"></i>;
+const RIcon = <i className="bx bx-money side-menu__icon"></i>;
+const UEIcon = <i className="bx bx-box side-menu__icon"></i>;
+const UMIcon = <i className="bx bxs-user-account side-menu__icon"></i>;
+const UIIcon = <i className="bx bxs-user-rectangle side-menu__icon"></i>;
 
 const badge = (
 	<span className="badge !bg-warning/10 !text-warning !py-[0.25rem] !px-[0.45rem] !text-[0.75em] ms-1">
@@ -56,6 +57,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/intern/dashboard",
@@ -65,6 +67,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards",
@@ -74,6 +77,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -83,6 +87,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -92,6 +97,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		menutitle: "E-COMMERCE",
@@ -104,6 +110,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -113,6 +120,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -122,6 +130,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -131,6 +140,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -140,6 +150,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -149,6 +160,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -158,6 +170,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		icon: SettIcon,
@@ -173,10 +186,11 @@ export const MenuItems: any = [
 				active: false,
 				selected: false,
 				dirchange: false,
+        show: isAuthenticated()
 			},
 		],
 	},
-  {
+	{
 		menutitle: "BOARD",
 	},
 	{
@@ -187,6 +201,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -196,8 +211,9 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
-  {
+	{
 		menutitle: "FINANCE",
 	},
 	{
@@ -208,6 +224,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/dashboards/crm",
@@ -217,8 +234,9 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
-  {
+	{
 		path: "/dashboards/crm",
 		title: "Book Keeping",
 		icon: BKIcon,
@@ -226,8 +244,9 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
-  {
+	{
 		path: "/dashboards/crm",
 		title: "Reimbursement",
 		icon: RIcon,
@@ -235,8 +254,9 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
-  {
+	{
 		path: "/dashboards/crm",
 		title: "Utility Expense",
 		icon: UEIcon,
@@ -244,8 +264,9 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
-  {
+	{
 		icon: SettIcon,
 		title: "Settings",
 		selected: false,
@@ -259,42 +280,47 @@ export const MenuItems: any = [
 				active: false,
 				selected: false,
 				dirchange: false,
+        show: isAuthenticated()
 			},
-      {
+			{
 				path: "",
 				title: "Accounts",
 				type: "empty",
 				active: false,
 				selected: false,
 				dirchange: false,
+        show: isAuthenticated()
 			},
-      {
+			{
 				path: "",
 				title: "Banks",
 				type: "empty",
 				active: false,
 				selected: false,
 				dirchange: false,
+        show: isAuthenticated()
 			},
-      {
+			{
 				path: "",
 				title: "Department",
 				type: "empty",
 				active: false,
 				selected: false,
 				dirchange: false,
+        show: isAuthenticated()
 			},
-      {
+			{
 				path: "",
 				title: "Type of Expense",
 				type: "empty",
 				active: false,
 				selected: false,
 				dirchange: false,
+        show: isAuthenticated()
 			},
 		],
 	},
-  {
+	{
 		menutitle: "USER",
 	},
 	{
@@ -305,6 +331,7 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 	{
 		path: "/intern/users",
@@ -314,5 +341,6 @@ export const MenuItems: any = [
 		active: false,
 		selected: false,
 		dirchange: false,
+    show: isAuthenticated()
 	},
 ];

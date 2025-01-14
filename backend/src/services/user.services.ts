@@ -73,53 +73,35 @@ export class UserService {
 					{ userName: { $regex: regexSearch } },
 					{ fullName: { $regex: regexSearch } },
 				];
-				console.log("Search query:", query);
-
-				const users = await UserModel.find(query);
-
-				console.log("Fetched Users:", users);
-
-				return {
-					data: users.map((user) => ({
-						_id: user._id,
-						fullName: user.fullName,
-						userName: user.userName,
-						isActive: user.isActive,
-					})),
-					pagination: {
-						total_records: users.length,
-						current_page: 1,
-						total_pages: 1,
-						next_page: null,
-						prev_page: null,
-					},
-				};
-			} else {
-				const users = await UserModel.find(query)
-					.skip((page - 1) * pageSize)
-					.limit(pageSize);
-
-				console.log("Fetched Users:", users);
-
-				const totalUsers = await UserModel.countDocuments(query);
-
-				return {
-					data: users.map((user) => ({
-						_id: user._id,
-						fullName: user.fullName,
-						userName: user.userName,
-						isActive: user.isActive,
-					})),
-					pagination: {
-						total_records: totalUsers,
-						current_page: page,
-						total_pages: Math.ceil(totalUsers / pageSize),
-						next_page:
-							page < Math.ceil(totalUsers / pageSize) ? page + 1 : null,
-						prev_page: page > 1 ? page - 1 : null,
-					},
-				};
 			}
+
+			console.log("Search query:", query);
+
+			// Fetch total count of users matching the query
+			const totalUsers = await UserModel.countDocuments(query);
+
+			// Fetch paginated users matching the query
+			const users = await UserModel.find(query)
+				.skip((page - 1) * pageSize)
+				.limit(pageSize);
+
+			console.log("Fetched Users:", users);
+
+			return {
+				data: users.map((user) => ({
+					_id: user._id,
+					fullName: user.fullName,
+					userName: user.userName,
+					isActive: user.isActive,
+				})),
+				pagination: {
+					total_records: totalUsers,
+					current_page: page,
+					total_pages: Math.ceil(totalUsers / pageSize),
+					next_page: page < Math.ceil(totalUsers / pageSize) ? page + 1 : null,
+					prev_page: page > 1 ? page - 1 : null,
+				},
+			};
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				throw new Error(`Error fetching user permissions: ${error.message}`);

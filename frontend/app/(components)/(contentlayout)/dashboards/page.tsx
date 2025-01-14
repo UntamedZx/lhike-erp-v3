@@ -1,15 +1,20 @@
 "use client";
 import Pageheader from "@/shared/layout-components/page-header/pageheader";
 import Seo from "@/shared/layout-components/seo/seo";
-import React, { Fragment } from "react";
-import * as Widgetsdata from "@/shared/data/widgets/widgetsdata";
-import dynamic from "next/dynamic";
 import Link from "next/link";
-const ReactApexChart = dynamic(() => import("react-apexcharts"), {
-	ssr: false,
-});
+import { useRouter } from "next/navigation";
+import React, { Fragment, useEffect } from "react";
 
 const Dashboard = () => {
+	const router = useRouter();
+
+	useEffect(() => {
+		const token = localStorage.getItem("authToken");
+		if (!token) {
+			router.push("/");
+		}
+	}, [router]);
+
 	return (
 		<Fragment>
 			<Seo title={"Sales Warehouse Logistics"} />
@@ -153,15 +158,15 @@ const Dashboard = () => {
 							<div className="grid grid-cols-12">
 								<div className="col-span-6 pe-0">
 									<p className="mb-2">
-										<span className="text-[1rem]">
-											SHIPPED OUT(0)
-										</span>
+										<span className="text-[1rem]">SHIPPED OUT(0)</span>
 									</p>
 									<p className="mb-2 text-[0.75rem]">
 										<span className="text-[1.5625rem] font-semibold leading-none vertical-bottom mb-0">
 											₱0.00
 										</span>
-                    <span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">(Shipped-out, Pick-up)</span>
+										<span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">
+											(Shipped-out, Pick-up)
+										</span>
 									</p>
 								</div>
 								<div className="col-span-6">
@@ -236,14 +241,15 @@ const Dashboard = () => {
 							<div className="grid grid-cols-12">
 								<div className="col-span-6 pe-0">
 									<p className="mb-2">
-										<span className="text-[1rem]">IN-TRANSIT(5)
-										</span>
+										<span className="text-[1rem]">IN-TRANSIT(5)</span>
 									</p>
 									<p className="mb-2 text-[0.75rem]">
 										<span className="text-[1.5625rem] font-semibold leading-none vertical-bottom mb-0">
 											₱0.00
 										</span>
-                    <span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">(Detained, In-transit, Problematic)</span>
+										<span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">
+											(Detained, In-transit, Problematic)
+										</span>
 									</p>
 								</div>
 								<div className="col-span-6">
@@ -270,7 +276,9 @@ const Dashboard = () => {
 										<span className="text-[1.5625rem] font-semibold leading-none vertical-bottom mb-0">
 											₱0.00
 										</span>
-                    <span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">(On-delivery, Delivering)</span>
+										<span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">
+											(On-delivery, Delivering)
+										</span>
 									</p>
 								</div>
 								<div className="col-span-6">
@@ -323,7 +331,9 @@ const Dashboard = () => {
 										<span className="text-[1.5625rem] font-semibold leading-none vertical-bottom mb-0">
 											₱0.00
 										</span>
-                    <span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">(For return, Returning)</span>
+										<span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">
+											(For return, Returning)
+										</span>
 									</p>
 								</div>
 								<div className="col-span-6">

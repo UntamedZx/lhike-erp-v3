@@ -53,7 +53,7 @@ export class UserController {
 	static async getAllUsers(req: FastifyRequest<{Querystring: UserQuery}>, reply: FastifyReply) {
 		try {
 			const page = parseInt(req.query.page as string) || 1;
-			const pageSize = parseInt(req.query.pageSize as string) || 5;
+			const pageSize = parseInt(req.query.pageSize as string) || 10;
 			const search = (req.query.search as string) || "";
 
 			const result = await UserService.getAllUser(page, pageSize, search);
